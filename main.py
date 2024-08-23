@@ -56,7 +56,7 @@ def main(date) :
     # print(prompt)
 
     answer = ollama.chat(
-        model='llama3.1:8b',
+        model='gemma2:2b',
         messages=[{'role': 'user', 'content': prompt}],
     )
     # print(answer)
@@ -84,6 +84,6 @@ def main(date) :
 
 if __name__ == "__main__" :
 
-    # date = datetime.datetime.today()
-    date = datetime.datetime(2024, 8, 20)
-    main(date)
+    date = datetime.datetime.today()
+    if date.weekday() == 1 :
+        main(date)
