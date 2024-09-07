@@ -1,7 +1,7 @@
 import garminconnect
 import datetime
 import os
-import ollama
+import openai
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -55,19 +55,24 @@ def main(date) :
 
     # print(prompt)
 
-    answer = ollama.chat(
-        model='gemma2:2b',
-        messages=[{'role': 'user', 'content': prompt}],
+    client = openai.OpenAI()
+    completion = openai.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
     )
-    # print(answer)
-    # print(answer["message"]["content"])
+    # print(completion.choices[0].message.content)
 
     sender_email = os.environ["SENDER_EMAIL"]
     password = os.environ["GARMINBOT_APP_PSW"]
     receiver_email = os.environ["MY_EMAIL"]
 
     subject = "[Automated Email] Weekly Health Review"
-    body = answer["message"]["content"]
+    body = completion.choices[0].message.content
 
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -82,8 +87,9 @@ def main(date) :
     server.quit()
 
 
-if __name__ == "__main__" :
 
+
+if __name__ == "__main__" :
     date = datetime.datetime.today()
     if date.weekday() == 1 :
         main(date)
