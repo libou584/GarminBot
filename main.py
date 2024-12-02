@@ -80,7 +80,7 @@ def addPreviousActivityMinutesData(client, date) :
 def main(date) :
 
     client = garminconnect.Garmin(os.environ["MY_EMAIL"], os.environ["GARMIN_CONNECT_PSW"])
-    client.login()
+    client.login() # error in the login sequence
 
     prompt = "You are a personal health assistant analyzing my weekly health data. Your task is to provide insights, and offer recommendations based on the following data of the last 7 days and compare it to the previous week data :\n\n"
     prompt += addSleepData(client, date)
