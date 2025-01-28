@@ -98,7 +98,7 @@ def main(date) :
 
     client = openai.OpenAI()
     completion = openai.chat.completions.create(
-    model="gpt-4o-mini",
+    model="gpt-4o",
     messages=[
             {
                 "role": "user",
